@@ -1,0 +1,17 @@
+#!/usr/bin/perl -w -CAS
+
+our $VERSION = 'v1.1.0'; # VERSION
+use POSIX qw(setlocale);
+use FindBin;
+use lib "$FindBin::RealBin/../lib/perl5";
+BEGIN {
+    if ($^O eq 'MSWin32') {
+        require Win32::Locale;
+        setlocale POSIX::LC_ALL, Win32::Locale::get_locale();
+    } else {
+        setlocale POSIX::LC_ALL, '';
+    }
+}
+use App::Sqitch;
+
+exit App::Sqitch->go;
